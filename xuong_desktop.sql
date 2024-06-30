@@ -106,6 +106,7 @@ CREATE TABLE [dbo].[KhachHang](
 	[ThanhPho] [nvarchar](50) NULL,
 	[QuocGia] [nvarchar](50) NULL,
 	[MatKhau] [varchar](max) NULL,
+	[TrangThai] [int] NULL DEFAULT 0,
 PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
