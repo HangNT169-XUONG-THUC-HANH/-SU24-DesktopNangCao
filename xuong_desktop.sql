@@ -79,14 +79,14 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[HoaDonChiTiet](
+       [Id] [int] IDENTITY(1,1) NOT NULL,
 	[IdHoaDon] [int] IDENTITY(1,1) NOT NULL,
 	[IdChiTietSP] [int] NOT NULL,
 	[SoLuong] [int] NULL,
 	[DonGia] [decimal](20, 0) NULL,
- CONSTRAINT [PK_HoaDonCT] PRIMARY KEY CLUSTERED 
+PRIMARY KEY CLUSTERED 
 (
-	[IdHoaDon] ASC,
-	[IdChiTietSP] ASC
+	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -107,6 +107,7 @@ CREATE TABLE [dbo].[KhachHang](
 	[QuocGia] [nvarchar](50) NULL,
 	[MatKhau] [varchar](max) NULL,
 	[TrangThai] [int] NULL DEFAULT 0,
+	[GioiTinh] [bit] NULL
 PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -142,7 +143,6 @@ CREATE TABLE [dbo].[NhanVien](
 	[DiaChi] [nvarchar](100) NULL,
 	[Sdt] [varchar](30) NULL,
 	[MatKhau] [varchar](max) NULL,
-	[IdCH] [int] NULL,
 	[IdCV] [int] NULL,
 	[TrangThai] [int] NULL,
 PRIMARY KEY CLUSTERED 
@@ -203,23 +203,23 @@ INSERT [dbo].[HoaDon] ([Id], [IdKH], [IdNV], [Ma], [NgayTao], [NgayThanhToan], [
 SET IDENTITY_INSERT [dbo].[HoaDon] OFF
 SET IDENTITY_INSERT [dbo].[HoaDonChiTiet] ON 
 
-INSERT [dbo].[HoaDonChiTiet] ([IdHoaDon], [IdChiTietSP], [SoLuong], [DonGia]) VALUES (1, 1, 1, CAST(40000 AS Decimal(20, 0)))
-INSERT [dbo].[HoaDonChiTiet] ([IdHoaDon], [IdChiTietSP], [SoLuong], [DonGia]) VALUES (2, 1, 2, CAST(19000 AS Decimal(20, 0)))
+INSERT [dbo].[HoaDonChiTiet] ([Id],[IdHoaDon], [IdChiTietSP], [SoLuong], [DonGia]) VALUES (1,1, 1, 1, CAST(40000 AS Decimal(20, 0)))
+INSERT [dbo].[HoaDonChiTiet] ([Id],[IdHoaDon], [IdChiTietSP], [SoLuong], [DonGia]) VALUES (2,2, 1, 2, CAST(19000 AS Decimal(20, 0)))
 SET IDENTITY_INSERT [dbo].[HoaDonChiTiet] OFF
 SET IDENTITY_INSERT [dbo].[KhachHang] ON 
 
-INSERT [dbo].[KhachHang] ([Id], [Ma], [Ten], [TenDem], [Ho], [NgaySinh], [Sdt], [DiaChi], [ThanhPho], [QuocGia], [MatKhau]) VALUES (1, N'KH06', N'Phúc', N'H?ng', N'Ð?', CAST(N'2003-08-03' AS Date), N'0962823303', N'Nam Ð?nh', NULL, NULL, NULL)
-INSERT [dbo].[KhachHang] ([Id], [Ma], [Ten], [TenDem], [Ho], [NgaySinh], [Sdt], [DiaChi], [ThanhPho], [QuocGia], [MatKhau]) VALUES (2, N'KH05', N'Phúc', N'H?ng', N'Ð?', CAST(N'2003-08-03' AS Date), N'0962823303', N'Nam Ð?nh', NULL, NULL, NULL)
+INSERT [dbo].[KhachHang] ([Id], [Ma], [Ten], [TenDem], [Ho], [NgaySinh], [Sdt], [DiaChi], [ThanhPho], [QuocGia], [MatKhau],[TrangThai],[GioiTinh]) VALUES (1, N'KH06', N'Phúc', N'H?ng', N'Ð?', CAST(N'2003-08-03' AS Date), N'0962823303', N'Nam Ð?nh', NULL, NULL, NULL,1,1)
+INSERT [dbo].[KhachHang] ([Id], [Ma], [Ten], [TenDem], [Ho], [NgaySinh], [Sdt], [DiaChi], [ThanhPho], [QuocGia], [MatKhau],[TrangThai],[GioiTinh]) VALUES (2, N'KH05', N'Phúc', N'H?ng', N'Ð?', CAST(N'2003-08-03' AS Date), N'0962823303', N'Nam Ð?nh', NULL, NULL, NULL,1,0)
 SET IDENTITY_INSERT [dbo].[KhachHang] OFF
 SET IDENTITY_INSERT [dbo].[MauSac] ON 
 
-INSERT [dbo].[MauSac] ([Id], [Ma], [Ten]) VALUES (1, N'MS01', N'Vàng Cứt')
+INSERT [dbo].[MauSac] ([Id], [Ma], [Ten]) VALUES (1, N'MS01', N'Vàng ')
 INSERT [dbo].[MauSac] ([Id], [Ma], [Ten]) VALUES (2, N'MS03', N'Tím Mộng Mơ')
 SET IDENTITY_INSERT [dbo].[MauSac] OFF
 SET IDENTITY_INSERT [dbo].[NhanVien] ON 
 
-INSERT [dbo].[NhanVien] ([Id], [Ma], [Ten], [TenDem], [Ho], [GioiTinh], [NgaySinh], [DiaChi], [Sdt], [MatKhau], [IdCH], [IdCV], [TrangThai]) VALUES (1, N'NV01', N'Hung', N'Quang', N'Le', N'Nam', CAST(N'2003-08-10' AS Date), N'Bac Ninh', N'0962823303', NULL, NULL, NULL,  0)
-INSERT [dbo].[NhanVien] ([Id], [Ma], [Ten], [TenDem], [Ho], [GioiTinh], [NgaySinh], [DiaChi], [Sdt], [MatKhau], [IdCH], [IdCV], [TrangThai]) VALUES (2, N'NV02', N'Khai', N'Văn', N'Tran', N'Nữ', CAST(N'2002-09-02' AS Date), N'Lai Chau 98', N'0962823303', NULL, NULL, NULL, 1)
+INSERT [dbo].[NhanVien] ([Id], [Ma], [Ten], [TenDem], [Ho], [GioiTinh], [NgaySinh], [DiaChi], [Sdt], [MatKhau], [IdCV], [TrangThai]) VALUES (1, N'NV01', N'Hung', N'Quang', N'Le', N'Nam', CAST(N'2003-08-10' AS Date), N'Bac Ninh', N'0962823303',  NULL, NULL,  0)
+INSERT [dbo].[NhanVien] ([Id], [Ma], [Ten], [TenDem], [Ho], [GioiTinh], [NgaySinh], [DiaChi], [Sdt], [MatKhau], [IdCV], [TrangThai]) VALUES (2, N'NV02', N'Khai', N'Văn', N'Tran', N'Nữ', CAST(N'2002-09-02' AS Date), N'Lai Chau 98', N'0962823303',NULL, NULL, 1)
 SET IDENTITY_INSERT [dbo].[NhanVien] OFF
 SET IDENTITY_INSERT [dbo].[NSX] ON 
 
