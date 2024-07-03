@@ -393,3 +393,4 @@ GO
 ALTER TABLE [dbo].[NhanVien]  WITH CHECK ADD FOREIGN KEY([IdCV])
 REFERENCES [dbo].[ChucVu] ([Id])
 GO
+ALTER TABLE [dbo].[HoaDon]n ADD [TongTien] decimal(38,0) NULL;
